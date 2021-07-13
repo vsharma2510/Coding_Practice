@@ -44,7 +44,7 @@ void basic_fit()
   /* ----- Fit model to data ----- */
 
   //Fit pdf to data
-  RooFitResult* fitresult = gauss.fitTo(*data,Save());
+  RooFitResult* fitresult = gauss.fitTo(*data,Save()); //Need to save for getting final fit parameters later
 
   cout<<"fit result stored"<<endl;
 
@@ -53,10 +53,11 @@ void basic_fit()
   sigma.Print();
 
   /* ----- Get fit parameters from floatParsFinal() ----- */
-  RooRealVar mean_final = (RooRealVar*)fitresult->floatParsFinal().FindObject("mean");
-  RooRealVar sigma_final = (RooRealVar*)fitresult->floatParsFinal().FindObject("sigma");
+  RooRealVar* mean_final = (RooRealVar*)fitresult->floatParsFinal().find("mean");
+  RooRealVar* sigma_final = (RooRealVar*)fitresult->floatParsFinal().find("sigma");
 
-  mean_final.Print();
-  sigma_final.Print();
+  double mean_error = mean_final->getError();
+  cout<<"Error is "<<mean_error<<endl;
+  sigma_final->Print();
 
 }

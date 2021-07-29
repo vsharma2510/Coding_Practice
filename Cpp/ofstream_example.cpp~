@@ -1,0 +1,14 @@
+// ofstream::open / ofstream::close
+#include <fstream>      // std::ofstream
+using namespace std;
+int main () {
+
+  std::ofstream ofs;
+  ofs.open ("./output/test.txt", std::ofstream::out | std::ofstream::app);
+
+  ofs << " more lorem ipsum \n";
+
+  ofs.close();
+
+  return 0;
+}

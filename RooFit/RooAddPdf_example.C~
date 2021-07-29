@@ -1,0 +1,22 @@
+#include "RooRealVar.h"
+#include "RooDataSet.h"
+#include "RooGaussian.h"
+#include "RooChebychev.h"
+#include "RooAddPdf.h"
+#include "TCanvas.h"
+#include "TAxis.h"
+#include "RooPlot.h"
+using namespace RooFit;
+
+void composite_pdf(){
+  //Declare observvable x
+  RooRealVar x("x","x",0,10);
+
+  //Create two Gaussian PDFs g1(x,mean,sigma) and g2(x,mean2,sigma2) and their parameters
+  RooRealVar mean("mean","mean of gaussian",5);
+  RooRealVar sigma1("sigma1","width of gaussian". 0.5);
+  RooRealVar sigma2("sigma2","width of gaussain",1);
+
+  RooGaussian sig1("sig1","Signal component 1",x,mean,sigma1);
+  RooGaussian sig2("sig2","Signal Component 2",x,mean,sigma2);
+  RooChebychev bkg("nkg","Background",x,RooArgSet(a0,a1));

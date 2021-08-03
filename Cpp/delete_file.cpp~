@@ -1,0 +1,11 @@
+//Testing code to delete text file within C++ code
+#include <fstream>
+#include <filesystem>
+#include <TString>
+
+using namespace std;
+
+int main(){
+  
+  TString* file_name = Form("test_text_file.txt");
+  

@@ -1,0 +1,191 @@
+#control enter runs a line of code from a script
+read.csv(file="data/inflammation-01.csv",header=FALSE)
+
+#to save things we use the arrow
+weight_kg<-55
+weight_kg<-57
+weight_g<-weight_kg*1000
+weight_lb<-2.2*weight_kg
+#we can look at the help documents, using the ?
+?read.csv
+
+#load the file assuming that there are headers within the csv
+dat<-read.csv(file="data/inflammation-01.csv",header=FALSE)
+head(dat)
+class(dat)
+class(weight_kg)
+dim(dat)#row x column
+nrow(dat)#number of rows
+ncol(dat)#number of columns
+
+#subsetting aka filtering
+dat[1,1] #particular column
+dat[1,] #entire row
+dat[,1] #entire column
+dat[2] #entire column
+dat[c(1,3,4),]
+#c creates a vector, c stands for concatenate
+dat[,c(1,3,4)]
+dat[c(1,3,4),c(1,40)]
+dat[dat$V1==0,] #get all rows with the column 1 entry being 0
+#subsetting is just filter
+dat[] #all rows and columns
+dat[1:5,1:5] #rows, columns
+1:5 #creates a vector with integers 1 through 5
+patient_1<-dat[1,] #isolate first row and store it in patient_1
+patient_1
+max(patient_1) #maximum value for row
+apply(dat,1,max)#???
+?apply()
+max_inf<-apply(dat,1,max)
+length(max_inf) #check it matches or ncol
+dim(dat)
+rowMeans(dat)
+colMeans(dat)
+
+mean(dat[,5]) #???
+sd(dat[,5]) #???
+apply(dat,1,sd)
+summary(dat[,1:5]) #summarizes the data
+
+avg_day_inflamation<-apply(dat,2,mean)
+plot(avg_day_inflamation)
+
+#functions
+fahrenheit_to_celsius<-function(temp_F){
+  #write code here
+  temp_C<-(temp_F-32)*5/9
+  return(temp_C) #tell it what to return when complete
+}
+fahrenheit_to_celsius(69)
+fahrenheit_to_celsius(temp_F=69)
+
+celsius_to_kelvin<-function(temp_C){
+  temp_K<-temp_C+273.15
+  return(temp_K)
+}
+celsius_to_kelvin(0)
+fahrenheit_to_kelvin<-function(temp_F){
+  temp_C<-fahrenheit_to_celsius(temp_F)
+  temp_K<-celsius_to_kelvin(temp_C)
+  return(temp_K)
+}
+fahrenheit_to_kelvin(69.0)
+#nesting function
+celsius_to_kelvin(fahrenheit_to_celsius(32.0))
+
+best_practice<-c("Write","programs","for","people","not","computers")
+asterisk<-"***" #R interprets a variable with a single value as a vector with one element
+highlight(best_practice,asterisk)
+#Write a function called highlight that combine asterisk and best_practice to create
+#"***" "Write" "programs" "for" "people" "not" "computers" "***"
+
+highlight <- function(best_practice, asterisk="***"){
+  hLight <- c(asterisk, best_practice, asterisk)
+  return(hLight)
+}
+highlight(best_practice = best_practice, asterisk = asterisk)
+highlight(best_practice = best_practice)
+
+input_1 <- 20
+mySum <- function(input_1, input_2 = 10) {
+  output <- input_1 + input_2
+  return(output)
+}
+mySum(input_1 = 1, 3)
+mySum(3)
+mySum(input_2=3)
+
+center<-function(data, midpoint){
+  new_data <- (data-mean(data))+midpoint
+  return(new_data)
+}
+z<-c(0,0,0,0)
+z
+center(data=z, midpoint=3)
+dat<-read.csv(file='data/inflammation-01.csv', header = FALSE) #completed above
+centered<-center(dat[,4], 0) #centered day 4 for our real data
+head(centered)
+mean(dat[,4])
+mean(centered)
+sd(dat[,4]) - sd(centered)
+all.equal(sd(dat[,4]), sd(centered))
+
+datNA<-dat
+datNA[10,4]<-NA
+center(datNA[,4],0)
+mean(dat[,4], na.rm=T)
+
+center<-function(data, midpoint){
+  #describe what the function does
+  #put an example
+  new_data <- (data-mean(data))+midpoint #step 1 - calculate the center
+  return(new_data)
+}
+
+?which
+
+#make a function to apply over the for loop
+analyze<-function(filename){
+  dat<-read.csv(file = filename,header=FALSE) #read in the data
+  #plot the average
+  avg_day_inflamation<-apply(dat,2,mean) #analyze the data
+  plot(avg_day_inflamation) #plot the data
+  #plot the maximum
+  max_day_inflamation<-apply(dat,2,max)
+  plot(max_day_inflamation)
+  #plot the minimum
+  min_day_inflamation<-apply(dat,2,min)
+  plot(min_day_inflamation)
+}
+analyze('data/inflammation-02.csv')
+
+#introduce for loops
+best_practice<-c("Let","the","computer","do","the","work")
+print_words<-function(sentence){
+  print(sentence[1])
+  print(sentence[2])
+  print(sentence[3])
+  print(sentence[4])
+  print(sentence[5])
+  print(sentence[6])
+}
+print_words(best_practice)
+
+#for loop
+len<-0
+vowels<-c("a","e","i","o","u")
+for(v in vowels){
+  len<-len+1
+}
+len
+
+letter<-"z"
+for(letter in c("a","b","c")){
+  print(letter)
+}
+
+l<-seq(3)
+class(l)
+print_N<-function(N){
+  l<-seq(N)
+  print(l)
+}
+print_N(6)      
+list.files(path="data",pattern="inflammation",full.names=TRUE)
+files_to_analyze<-list.files(path="data",pattern="inflammation",full.names=TRUE)
+for(files in files_to_analyze[1:3]){
+  analyze(files)
+}
+
+analyze_all<-function(folder='data',pattern){
+  #runs the function analyze datafiles in a  folder that contains a certain pattern
+  filenames<-list.files(path=folder,pattern=pattern,full.names=TRUE)
+  for (f in filenames) {
+    analyze(f)
+  }
+}
+
+pdf('all_inflammation.pdf')
+analyze_all(folder="data",pattern="inflamma")
+dev.off()

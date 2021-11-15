@@ -59,6 +59,6 @@ def isValidChessBoard(board):
             print("INVALID NUMBER OF PIECES FOR KING: BLACK " + str(num_bking) + " WHITE " + str(num_wking))
 
 
-chess_board={'1h':'bking','6c':'wqueen','2g':'bbishop','5h':'bqueen','3e':'wking','2h':'bbishop'}
+chess_board = {'1h': 'bking', '6c': 'wqueen', '2g': 'bbishop', '5h': 'bqueen', '3e': 'wking', '2h': 'bbishop'}
 
 isValidChessBoard(chess_board)

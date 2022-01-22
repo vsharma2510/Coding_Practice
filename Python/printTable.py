@@ -12,6 +12,6 @@ def printTable(tableData):
         for item in range(len(columnWidth)):
             print(tableData[item][word].rjust(columnWidth[item]), end=' ')
         print()
-        
+
 tableData = [['apples','oranges','cherries','banana'],['Alice','Bob','Carol','David'],['dogs','cats','moose','goose']]
 printTable(tableData)

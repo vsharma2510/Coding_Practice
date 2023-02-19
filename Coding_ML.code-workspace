@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../Geron_book_exercises"
+		},
+		{
+			"path": "../Stats_Cowan"
+		},
+		{
+			"name": "Raschka_book_execises",
+			"path": "../Raschka_book_execises"
+		}
+	],
+	"settings": {}
+}
